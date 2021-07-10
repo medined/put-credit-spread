@@ -1,0 +1,16 @@
+name: put-credit-spread
+
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  - black
+  - mamba
+  - django
+  - pandas
+  - pip
+  - python
+  - requests
+  - pip:
+    - robin-stocks
