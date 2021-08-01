@@ -15,14 +15,14 @@ class Migration(migrations.Migration):
             name='PCSTrade',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date_entry', models.DateField(verbose_name='EntryDate')),
+                ('date_entry', models.DateField(blank=True, verbose_name='EntryDate')),
                 ('symbol', models.CharField(max_length=10, verbose_name='Symbol')),
                 ('date_expiration', models.DateField(verbose_name='ExpDate')),
                 ('buy_strike', models.DecimalField(decimal_places=2, max_digits=6, verbose_name='Buy')),
                 ('sell_strike', models.DecimalField(decimal_places=2, max_digits=6, verbose_name='Sell')),
                 ('credit', models.DecimalField(decimal_places=2, max_digits=6, verbose_name='Credit')),
                 ('count_contracts', models.PositiveIntegerField(verbose_name='Contracts')),
-                ('closed_at', models.DecimalField(decimal_places=2, max_digits=6, verbose_name='ClosedAt')),
+                ('closed_at', models.DecimalField(blank=True, decimal_places=2, max_digits=6, verbose_name='ClosedAt')),
             ],
         ),
     ]

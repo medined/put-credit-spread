@@ -1,0 +1,23 @@
+body {
+    background: white;
+}
+
+li a {
+    color: green
+}
+
+td {
+    text-align: center;
+}
+
+.currency {
+    text-align: right;
+}
+
+.percent {
+    text-align: right;
+}
+
+.symbol {
+    text-align: left;
+}

@@ -1,0 +1,86 @@
+{% load humanize %}
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'pcs/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.25/b-1.7.1/date-1.1.0/fc-3.3.3/fh-3.1.9/rg-1.1.3/sp-1.3.0/sl-1.3.3/datatables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.25/b-1.7.1/date-1.1.0/fc-3.3.3/fh-3.1.9/rg-1.1.3/sp-1.3.0/sl-1.3.3/datatables.min.js"></script>
+
+<h1>Put Credit Spreads</h1>
+
+<div>Income: ${{ sum_income|floatformat:2|intcomma }}</div>
+<div>Collateral: ${{ sum_collateral|floatformat:2|intcomma }}</div>
+<div>Profit: ${{ sum_profit|floatformat:2|intcomma }}</div>
+<div>Wins: {{ win_count }}</div>
+<div>Losses: {{ loss_count }}</div>
+
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
+
+{% if records %}
+    <table id="example" class="display" style="width:100%">
+        <thead>
+        <tr>
+            <th>Date of Entry</th>
+            <th>Symbol</th>
+            <th>Contracts</th>
+            <th>Buy Put</th>
+            <th>Sell Put</th>
+            <th>Credit</th>
+            <th>Closed At</th>
+            <th>Expiration</th>
+            <th>Days Held</th>
+            <th>Days Left</th>
+            <th>Income</th>
+            <th>Collateral</th>
+            <th>Potential ROI</th>
+            <th>Annualized</th>
+            <th>Profit</th>
+        </tr>
+        </thead>
+        <tbody>
+    {% for record in records %}
+        <tr>
+            <td>{{ record.date_entry }}</td>
+            <td class="symbol"><a href="http://127.0.0.1:8000/admin/pcs/pcstrade/{{record.id}}/change/">{{ record.symbol }}</a></td>
+            <td>{{ record.count_contracts }}</td>
+            <td class="currency">${{ record.buy_strike }}</td>
+            <td class="currency">${{ record.sell_strike }}</td>
+            <td class="currency">${{ record.credit }}</td>
+            <td>{% if record.closed_at is not None %}${{ record.closed_at }}{% endif %}</td>
+            <td>{{ record.date_expiration }}</td>
+            <td>{% if record.days_held %}{{ record.days_held }}{% endif %}</td>
+            <td>{% if record.days_left > 0 %}{{ record.days_left }}{% endif %}</td>
+            <td class="currency">${{ record.income|floatformat:2|intcomma }}</td>
+            <td class="currency">${{ record.collateral|floatformat:2|intcomma }}</td>
+            <td class="percent">{{ record.return_on_investment_as_percent }}</td>
+            <td class="percent">{% if record.annualized_as_percent %}{{ record.annualized_as_percent }}%{% endif %}</td>
+            <td class="currency">{% if record.profit is not None %}${{ record.profit|floatformat:2|intcomma }}{% endif %}</td>
+        </tr>
+    {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Date of Entry</th>
+                <th>Symbol</th>
+                <th>Contracts</th>
+                <th>Buy Put</th>
+                <th>Sell Put</th>
+                <th>Credit</th>
+                <th>Closed At</th>
+                <th>Expiration</th>
+                <th>Days Held</th>
+                <th>Days Left</th>
+                <th>Income</th>
+                <th>Collateral</th>
+                <th>Potential ROI</th>
+                <th>Annualized</th>
+                <th>Profit</th>
+            </tr>
+        </tfoot>
+    </table>
+{% else %}
+    <p>No trades are available.</p>
+{% endif %}

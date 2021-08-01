@@ -1,0 +1,19 @@
+<h1>{{ record.symbol }}</h1>
+
+<form action="{% url 'pcs:update' record.id %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+        <table border='1' cellspacing="3" cellpadding="3">
+            <tr><td>Trade Date</td><td><input type="text" name="date_entry" id="date_entry" value="{{record.date_entry}}"/></td></tr>
+            <tr><td>Symbol</td><td><input type="text" name="symbol" id="symbol" value="{{record.symbol}}"/></td></tr>
+            <tr><td>Expiration Date</td><td><input type="text" name="date_expiration" id="date_expiration" value="{{record.date_expiration}}"/></td></tr>
+            <tr><td>Buy Strike</td><td align="right">$<input type="text" name="buy_strike" id="buy_strike" value="{{record.buy_strike}}"/></td></tr>
+            <tr><td>Sell Strike</td><td align="right">$<input type="text" name="sell_strike" id="sell_strike" value="{{record.sell_strike}}"/></td></tr>
+            <tr><td>Credit</td><td align="right">$<input type="text" name="credit" id="credit" value="{{record.credit}}"/></td></tr>
+            <tr><td>Contract Count</td><td align="right"><input type="text" name="count_contracts" id="count_contracts" value="{{record.count_contracts}}"/></td></tr>
+            <tr><td>Closed At</td><td><input type="text" name="closed_at" id="closed_at" value="{{record.closed_at}}"/></td></tr>
+            </tr>
+        </table>
+    </fieldset>
+    <input type="submit" value="Save">
+</form>
